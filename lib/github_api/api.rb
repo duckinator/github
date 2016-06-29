@@ -56,6 +56,10 @@ module Github
         @login, @password = extract_basic_auth(opts[:basic_auth])
       end
 
+      if opts.key?(:otp) && !opts[:otp].nil?
+        opts[:headers].merge!({"X-GitHub-OTP" => opts[:otp]})
+      end
+
       yield_or_eval(&block) if block_given?
     end
 
